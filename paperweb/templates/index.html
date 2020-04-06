@@ -35,24 +35,26 @@
     <!--初始化-->
     <div>
         <form class="layui-form layui-form-pane" action="">
-            <div class="layui-row layui-col-space10">
-                <button class="layui-btn gsget" style="margin: 5px;">
-                    初始化
-                </button>
-            </div>
             <br>
             <div class="layui-row">
                 <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
                     <div class="layui-form-item">
                         <label class="layui-form-label">环签名人数</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" required lay-verify="required" placeholder="请输入要初始化公钥私钥的人数 n"
+                            <input type="text" name="n" required lay-verify="required"
+                                   placeholder="请输入要初始化公钥私钥的人数 n"
                                    autocomplete="off"
                                    class="layui-input">
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="layui-row layui-col-space10">
+                <button class="layui-btn"  lay-submit lay-filter="rsainit" style="margin: 5px;">
+                    公钥私钥初始化
+                </button>
+            </div>
+
         </form>
     </div>
     <br>
@@ -62,18 +64,14 @@
     <!--签名生成-->
     <div>
         <form class="layui-form layui-form-pane" action="">
-            <div class="layui-row layui-col-space10">
-                <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo2">
-                    签名生成
-                </button>
-            </div>
-            <br>
+
             <div class="layui-row">
                 <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">成员编号</label>
+                        <label class="layui-form-label">签名者</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" required lay-verify="required" placeholder="请输入编号（ 0 ~ n-1 ）"
+                            <input type="text" name="title" required lay-verify="required"
+                                   placeholder="请输入编号（ 0 ~ n-1 ）"
                                    autocomplete="off"
                                    class="layui-input">
                         </div>
@@ -87,20 +85,21 @@
                               lay-verify="required"></textarea>
                 </div>
             </div>
-        </form>
-
-        <div class="layui-row layui-col-space10">
-            <div class="layui-row layui-col-md6">
-                <div class="layui-row " style="padding: 10px; background-color: #F2F2F2;">
-                    <div class="layui-card  layui-row">
-                        <div class="layui-card-header">
-                            数字签名
-                        </div>
-                        <div class="layui-card-body">未生成</div>
-                    </div>
+            <div class="layui-row layui-col-space10">
+                <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo2">
+                    环签名生成
+                </button>
+            </div>
+            <br>
+            <div class="layui-form-item">
+                <div class="layui-col-md12">
+                    <label class="layui-form-label">数字签名</label>
+                    <textarea name="ms" placeholder="未生成" class="layui-textarea"></textarea>
                 </div>
             </div>
-        </div>
+        </form>
+
+
     </div>
     <br>
     <hr class="layui-bg-green">
@@ -108,18 +107,19 @@
     <!--签名验证-->
     <div>
         <form class="layui-form layui-form-pane" action="">
-            <div class="layui-row layui-col-space10">
-                <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo3">
-                    签名验证
-                </button>
-            </div>
-            <br>
+
+
             <div class="layui-form-item">
                 <div class="layui-col-md12">
                     <label class="layui-form-label">输入签名</label>
                     <textarea name="qm1" placeholder="输入签名" class="layui-textarea"
                               lay-verify="required"></textarea>
                 </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo3">
+                    签名验证
+                </button>
             </div>
         </form>
     </div>
