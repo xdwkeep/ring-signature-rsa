@@ -1,0 +1,23 @@
+
+.bg {
+    background-color: #F0F0F0;
+}
+
+.inner-box {
+    background: #fff;
+    padding: 15px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    min-height: 580px;
+}
+
+.inner-box {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+}
