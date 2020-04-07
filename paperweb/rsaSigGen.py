@@ -4,6 +4,8 @@ from Crypto.Hash import SHA256
 import base64
 import gmpy2
 
+path=''
+
 # 生成哈希摘要
 def hash_my(L, e, m, u, v):
     L = str(L)
@@ -31,11 +33,11 @@ def sig_gen(n, k):
     Ln = [0 for x in range(0, n)] # 公钥N
     Le = [0 for x in range(0, n)] # 公钥e
     for i in range(n):
-        public_key = RSA.import_key(open('pem/public_key'+'_U'+str(i)+'.pem').read())
+        public_key = RSA.import_key(open('db/pem/public_key'+'_U'+str(i)+'.pem').read())
         Ln[i] = public_key.n
         Le[i] = public_key.e
     # 读取Uk的私钥
-    private_key = RSA.import_key(open('pem/private_key'+'_U'+str(k)+'.pem', "rb").read())
+    private_key = RSA.import_key(open('db/pem/private_key'+'_U'+str(k)+'.pem', "rb").read())
     d = private_key.d
 
     # 第一步计算关联标签e_
@@ -53,13 +55,13 @@ def sig_gen(n, k):
     u = random.randrange(1, Ln[k])
     v = random.randrange(1, Ln[k])
     # 要签名的内容
-    with open('message.txt', 'r') as f:
+    with open('db/message.txt', 'r') as f:
         m = f.read()
     # 公钥集合
     listL = Ln + Le
     strL = [str(i) for i in listL]
     L = '\n'.join(strL)
-    with open('L.txt', 'w') as file_object:
+    with open('db/L.txt', 'w') as file_object:
         file_object.write(L)
 
     s = [0 for x in range(0, n)]
@@ -98,17 +100,12 @@ def sig_gen(n, k):
     sigma = [c[0]] + s + s_ + [e_] + [r]
     str_sigma = [str(i) for i in sigma] # 每个元素转化为字符串
     out_str_sigma = '\n'.join(str_sigma)
-    with open('sigma_U'+str(k)+'.txt', 'w') as file_object:
+    #with open('sigma_U'+str(k)+'.txt', 'w') as file_object:
+    with open('db/sigma.txt', 'w') as file_object:
         file_object.write(out_str_sigma)
         print('签名生成完成')
 
-def test(c,name):
-    with open('sigsiggen_'+ name +'.txt', 'w') as file_object:
-        str_listc = [str(i) for i in c] # 每个元素转化为字符串
-        str_c = '\n'.join(str_listc)
-        file_object.write(str_c)
-        print(name+'文件写入')
-    
+
 
 if __name__ == "__main__":
     sig_gen(5,0)

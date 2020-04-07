@@ -5,7 +5,7 @@ import base64
 import gmpy2
 
 # 两个要验证关联性的编号
-def relevace_verify(usera,userb):
+def relevace_verify():
     # 读取输入的数据
     with open('message.txt', 'r') as f:
         m = f.read()
@@ -30,4 +30,4 @@ def relevace_verify(usera,userb):
 
 
 if __name__ == "__main__":
-    relevace_verify(0,1)
+    relevace_verify()

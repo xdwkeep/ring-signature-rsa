@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../static/common.css">
 </head>
 <body>
-<form class="layui-form" action="">
+<form class="layui-form" action="" lay-filter="formTest">
     <div class="layui-form-item">
         <label class="layui-form-label">输入框</label>
         <div class="layui-input-block">
@@ -20,6 +20,14 @@
         <label class="layui-form-label">文本域</label>
         <div class="layui-input-block">
             <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择加入的环</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="like[u0]" title="编号00" checked>
+            <input type="checkbox" name="like[u1]" title="编号01" checked>
+            <input type="checkbox" name="like[u2]" title="编号02" checked>
         </div>
     </div>
     <div class="layui-form-item">
@@ -70,6 +78,11 @@
                 }
             });
             return false;
+        });
+
+        //给表单赋值
+        form.val("formTest", {
+            "desc": "贤心"
         });
     });
 </script>

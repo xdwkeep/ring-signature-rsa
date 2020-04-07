@@ -20,7 +20,7 @@ def sig_verify(n):
     # 读取输入的数据
     with open('message.txt', 'r') as f:
         m = f.read()
-    with open('sigma_U0.txt', 'r') as f:
+    with open('sigma.txt', 'r') as f:
         sigma = f.read()
         # 读取sigma中的数组
         listSigma = sigma.split('\n')
@@ -53,9 +53,6 @@ def sig_verify(n):
         if i != n-1:
             c[i+1] = hash_my(L,e_,m,z[i],z_[i])
 
-    #test(c,'c')
-    #test(z,'z')
-    #test(z_,'z_')
     
     answer = hash_my(L,e_,m,z[n-1],z_[n-1])
     if c[0] == answer:
@@ -64,12 +61,6 @@ def sig_verify(n):
     else:
         print('false')
 
-def test(c,name):
-    with open('sigverify_'+ name +'.txt', 'w') as file_object:
-        str_listc = [str(i) for i in c] # 每个元素转化为字符串
-        str_c = '\n'.join(str_listc)
-        file_object.write(str_c)
-        print(name+'文件写入')
 
 if __name__ == "__main__":
     sig_verify(5)
