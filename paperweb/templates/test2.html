@@ -23,6 +23,12 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">关联性</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="akrflag" lay-skin="switch" lay-text="ON|OFF" checked lay-filter="akrflag">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">选择加入的环</label>
         <div class="layui-input-block">
             <input type="checkbox" name="like[u0]" title="编号00" checked>
@@ -33,7 +39,6 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-
         </div>
     </div>
 </form>
@@ -54,29 +59,12 @@
             //layer.msg(JSON.stringify(data.field));
             var url = path + '/test.do';
             var indexload;
-            console.log("t1")
-            console.log(data.field.title);
-            console.log(data.field.desc);
-            $.ajax({
-                url: url,
-                type: "post",
-                data: JSON.stringify({
-                    'title': data.field.title,
-                    'desc': data.field.desc
-                }),
-                dataType: "json",
-                beforeSend: function () {
-                    indexload = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
-                },
-                success: function (data) {
-                    console.log("传过来的是：")
-                    console.log(data)
-                    layer.close(indexload);
-                },
-                error: function () {
-                    console.log("ajax请求失败");
-                }
-            });
+
+            console.log(data.elem)
+            console.log(data.form)
+            console.log(data.field)
+
+
             return false;
         });
 
@@ -84,6 +72,8 @@
         form.val("formTest", {
             "desc": "贤心"
         });
+
+
     });
 </script>
 </body>

@@ -90,10 +90,17 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <label class="layui-form-label">关联性</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="flagakr" lay-skin="switch" lay-text="ON|OFF" checked
+                                   lay-filter="flagakr">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
                         <label class="layui-form-label">环选择</label>
                         <div class="layui-input-block">
                             {% for i in range(n) %}
-                                <input type="checkbox" name="like[u{{ i }}]" title="编号{{ i }}" checked>
+                                <input type="checkbox" class="userchoose" name="like[u{{ i }}]" value="{{ i }}" title="编号{{ i }}" checked>
                             {% endfor %}
                         </div>
                     </div>
@@ -130,20 +137,18 @@
         <legend>环签名验证</legend>
         <div class="layui-field-box">
             <div>
-                <form class="layui-form layui-form-pane" action="">
-
+                <form class="layui-form layui-form-pane" action="" lay-filter="rsaVerifySig">
                     <div class="layui-form-item">
                         <div class="layui-col-md12">
                             <label class="layui-form-label">输入消息</label>
-                            <textarea name="ms31" placeholder="输入消息" class="layui-textarea"
+                            <textarea name="vsm" placeholder="输入消息" class="layui-textarea"
                                       lay-verify="required"></textarea>
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <div class="layui-col-md12">
                             <label class="layui-form-label">输入签名</label>
-                            <textarea name="qm1" placeholder="输入签名" class="layui-textarea"
+                            <textarea name="vssigma" placeholder="输入签名" class="layui-textarea"
                                       lay-verify="required"></textarea>
                         </div>
                     </div>
@@ -160,6 +165,7 @@
                                 <div class="layui-input-block">
                                     <input type="text" name="answer1" required lay-verify="required"
                                            placeholder="未验证"
+                                           value="未验证"
                                            autocomplete="off"
                                            readonly
                                            class="layui-input">
@@ -176,23 +182,22 @@
     <br>
 
     <!--关联验证-->
-
     <fieldset class="layui-elem-field">
         <legend>关联性验证</legend>
         <div class="layui-field-box">
             <div>
                 <div class="layui-row layui-col-space10">
-                    <form class="layui-form layui-form-pane" action="">
+                    <form class="layui-form layui-form-pane" action="" lay-filter="rsaVerifyRe">
 
                         <div class="layui-form-item layui-row layui-col-space8">
                             <div class="layui-col-md6">
                                 <label class="layui-form-label">输入签名</label>
-                                <textarea name="qm21" placeholder="输入签名" class="layui-textarea"
+                                <textarea name="vrsigma1" placeholder="输入签名" class="layui-textarea"
                                           lay-verify="required"></textarea>
                             </div>
                             <div class="layui-col-md6">
                                 <label class="layui-form-label">输入签名</label>
-                                <textarea name="qm22" placeholder="输入签名" class="layui-textarea"
+                                <textarea name="vrsigma2" placeholder="输入签名" class="layui-textarea"
                                           lay-verify="required"></textarea>
                             </div>
                         </div>
@@ -208,9 +213,10 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">验证结果</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="answer1" required lay-verify="required"
+                                        <input type="text" name="answer2" required lay-verify="required"
                                                placeholder="未验证"
                                                autocomplete="off"
+                                               value="未验证"
                                                readonly
                                                class="layui-input">
                                     </div>
