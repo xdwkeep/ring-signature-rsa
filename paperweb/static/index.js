@@ -19,14 +19,22 @@ layui.use(['element', "layer", "jquery", "form"], function () {
             dataType: "json",
             beforeSend: function () {
                 indexload = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                //$("#button1").addClass("div-cant-click")
+                $("#button1").html("正在处理中...");
+                $("#button1").attr("disabled", "disabled");
             },
             success: function (data) {
                 console.log("传过来的是：", data);
                 layer.close(indexload);
+                $("#button1").html("生成公钥私钥");
+                $("#button1").removeAttr("disabled");
                 layer.msg('公私钥生成成功', {
                     icon: 1,
                     time: 2000
+                }, function () {
+                    window.location.reload()
                 });
+                //$("#button1").removeClass("div-cant-click")
             },
             error: function () {
                 console.log("ajax请求失败");

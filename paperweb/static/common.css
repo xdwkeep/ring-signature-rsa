@@ -21,3 +21,8 @@
     -moz-transition: all 0.2s linear;
     -webkit-transition: all 0.2s linear;
 }
+
+/*div无法点击*/
+.div-cant-click {
+    pointer-events: none;
+}

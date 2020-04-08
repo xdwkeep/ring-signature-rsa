@@ -30,7 +30,7 @@ def test():
 @app.route('/index.html')
 @app.route('/')
 def index():
-    with open('db/n.json', 'r') as f:
+    with open('db/n_all.json', 'r') as f:
         n = int(f.read())
     return render_template('index.html', n=n)
 
@@ -51,8 +51,8 @@ def rsaSigGen():
     json_data = json.loads(data)
     print(json_data)
     k = int(json_data['k'])
-    with open('db/n.json', 'r') as f:
-        n = int(f.read())
+    with open('db/n_all.json', 'r') as f:
+        n_all = int(f.read())
     with open('db/message.txt', 'w') as f:
         f.write(json_data['ms'])
     with open('db/flagakr.json', 'w') as f:
@@ -60,8 +60,7 @@ def rsaSigGen():
     userstr = json_data['userstr']
     struserlist = userstr.split(',')
     userlist = [int(struser) for struser in struserlist]
-    n = len(userlist)
-    sig_gen(n, k, userlist)
+    sig_gen(n_all, k, userlist)
     with open('db/sigma.txt', 'r') as f:
         sigma = f.read()
     return jsonify({"msg": 0, "data": sigma})
