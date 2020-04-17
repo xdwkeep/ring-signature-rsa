@@ -3,7 +3,8 @@ layui.use(['element', "layer", "jquery", "form"], function () {
     var form = layui.form;
     var layer = layui.layer;
     var $ = layui.jquery;
-    var path = "http://127.0.0.1:5000";
+    //var path = "http://127.0.0.1:5000";
+    var path = "http://134.175.190.199:5000";
 
     form.on('submit(rsainit)', function (data) {
         //layer.msg(JSON.stringify(data.field));
