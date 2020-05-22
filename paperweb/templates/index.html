@@ -32,202 +32,234 @@
 
 <div class="layui-container inner-box">
 
-    <!--初始化-->
-
-    <fieldset class="layui-elem-field">
-        <legend>生成公钥私钥</legend>
-        <div class="layui-field-box">
-            <div>
-                <form class="layui-form layui-form-pane" action="">
-                    <br>
-                    <div class="layui-row">
-                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">环签名人数</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="n" required lay-verify="required"
-                                           placeholder="请输入成员数 n"
-                                           autocomplete="off"
-                                           class="layui-input">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space10">
-                        <button id="button1" class="layui-btn" lay-submit lay-filter="rsainit" style="margin: 5px;">
-                            公钥私钥初始化
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-            <br>
-        </div>
-    </fieldset>
-    <br>
-    <br>
-    <br>
-
-    <!--签名生成-->
-
-    <fieldset class="layui-elem-field">
-        <legend>环签名生成</legend>
-        <div class="layui-field-box">
-            <div>
-                <form class="layui-form layui-form-pane" action="" lay-filter="rsaSigGenMs">
-
-                    <div class="layui-row">
-                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">签名者</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="k" required lay-verify="required"
-                                           placeholder="请输入编号（ 0 ~ n-1 ）"
-                                           autocomplete="off"
-                                           class="layui-input">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">关联性</label>
-                        <div class="layui-input-block">
-                            <input type="checkbox" name="flagakr" lay-skin="switch" lay-text="ON|OFF" checked
-                                   lay-filter="flagakr">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">环选择</label>
-                        <div class="layui-input-block">
-                            {% for i in range(n) %}
-                                <input type="checkbox" class="userchoose" name="like[u{{ i }}]" value="{{ i }}" title="编号{{ i }}" checked>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-col-md12">
-                            <label class="layui-form-label">输入消息</label>
-                            <textarea name="ms" placeholder="输入消息" class="layui-textarea"
-                                      lay-verify="required"></textarea>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space10">
-                        <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="rsaSigGen">
-                            环签名生成
-                        </button>
-                    </div>
-                    <br>
-                    <div class="layui-form-item">
-                        <div class="layui-col-md12">
-                            <label class="layui-form-label">数字签名</label>
-                            <textarea name="rsaSig" placeholder="未生成" readonly class="layui-textarea"></textarea>
-                        </div>
-                    </div>
-                </form>
-
-
-            </div>
-        </div>
-    </fieldset>
-    <br>
-    <br>
-    <br>
-    <!--签名验证-->
-    <fieldset class="layui-elem-field">
-        <legend>环签名验证</legend>
-        <div class="layui-field-box">
-            <div>
-                <form class="layui-form layui-form-pane" action="" lay-filter="rsaVerifySig">
-                    <div class="layui-form-item">
-                        <div class="layui-col-md12">
-                            <label class="layui-form-label">输入消息</label>
-                            <textarea name="vsm" placeholder="输入消息" class="layui-textarea"
-                                      lay-verify="required"></textarea>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-col-md12">
-                            <label class="layui-form-label">输入签名</label>
-                            <textarea name="vssigma" placeholder="输入签名" class="layui-textarea"
-                                      lay-verify="required"></textarea>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space10">
-                        <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo3">
-                            签名验证
-                        </button>
-                    </div>
-                    <br>
-                    <div class="layui-row">
-                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">验证结果</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="answer1" required lay-verify="required"
-                                           placeholder="未验证"
-                                           value="未验证"
-                                           autocomplete="off"
-                                           readonly
-                                           class="layui-input">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </fieldset>
-    <br>
-    <br>
-    <br>
-
-    <!--关联验证-->
-    <fieldset class="layui-elem-field">
-        <legend>关联性验证</legend>
-        <div class="layui-field-box">
-            <div>
-                <div class="layui-row layui-col-space10">
-                    <form class="layui-form layui-form-pane" action="" lay-filter="rsaVerifyRe">
-
-                        <div class="layui-form-item layui-row layui-col-space8">
-                            <div class="layui-col-md6">
-                                <label class="layui-form-label">输入签名</label>
-                                <textarea name="vrsigma1" placeholder="输入签名" class="layui-textarea"
-                                          lay-verify="required"></textarea>
-                            </div>
-                            <div class="layui-col-md6">
-                                <label class="layui-form-label">输入签名</label>
-                                <textarea name="vrsigma2" placeholder="输入签名" class="layui-textarea"
-                                          lay-verify="required"></textarea>
-                            </div>
-                        </div>
-                        <div class="layui-row layui-col-space10">
-                            <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo4">
-                                关联验证
-                            </button>
-                        </div>
-
-                        <br>
-                        <div class="layui-row">
-                            <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">验证结果</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="answer2" required lay-verify="required"
-                                               placeholder="未验证"
-                                               autocomplete="off"
-                                               value="未验证"
-                                               readonly
-                                               class="layui-input">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">初始化密钥</li>
+            <li>环签名生成</li>
+            <li>环签名验证</li>
+            <li>关联性验证</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <!--初始化-->
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend class="tip-a">初始化密钥</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            <form class="layui-form layui-form-pane" action="">
+                                <br>
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">环签名人数</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="n" required lay-verify="required"
+                                                       placeholder="请输入成员数 n"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="layui-row layui-col-space10">
+                                    <button id="button1" class="layui-btn" lay-submit lay-filter="rsainit"
+                                            style="margin: 5px;">
+                                        公钥私钥初始化
+                                    </button>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <div class="layui-row">
+                                    {% for i in range(n) %}
+                                        <div class="layui-col-md1 layui-col-xs2 layui-col-sm1">
+                                            <i class="layui-icon layui-icon-friends"
+                                               style="font-size: 45px; color:#009688; text-align: center"></i>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <br>
+                                <br>
+                            </form>
+                        </div>
+                        <br>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="layui-tab-item">
+                <!--签名生成-->
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend class="tip-b">环签名生成</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            <form class="layui-form layui-form-pane" action="" lay-filter="rsaSigGenMs">
+
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">签名者</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="k" required lay-verify="required"
+                                                       placeholder="请输入编号（ 0 ~ n-1 ）"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">关联性</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="flagakr" lay-skin="switch" lay-text="ON|OFF"
+                                               checked
+                                               lay-filter="flagakr">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">环选择</label>
+                                    <div class="layui-input-block">
+
+                                        {% for i in range(n) %}
+
+                                            <input type="checkbox" class="userchoose" name="like[u{{ i }}]"
+                                                   value="{{ i }}"
+                                                   title="编号{{ i }}" checked>
+
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-col-md12">
+                                        <label class="layui-form-label">输入消息</label>
+                                        <textarea name="ms" placeholder="输入消息" class="layui-textarea"
+                                                  lay-verify="required"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10">
+                                    <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="rsaSigGen">
+                                        签名生成
+                                    </button>
+                                </div>
+                                <br>
+                                <div class="layui-form-item">
+                                    <div class="layui-col-md12">
+                                        <label class="layui-form-label">数字签名</label>
+                                        <textarea name="rsaSig" placeholder="未生成" readonly
+                                                  class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="layui-tab-item">
+                <!--签名验证-->
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend class="tip-c">环签名验证</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            <form class="layui-form layui-form-pane" action="" lay-filter="rsaVerifySig">
+                                <div class="layui-form-item">
+                                    <div class="layui-col-md12">
+                                        <label class="layui-form-label">输入消息</label>
+                                        <textarea name="vsm" placeholder="输入消息" class="layui-textarea"
+                                                  lay-verify="required"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-col-md12">
+                                        <label class="layui-form-label">输入签名</label>
+                                        <textarea name="vssigma" placeholder="输入签名" class="layui-textarea"
+                                                  lay-verify="required"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10">
+                                    <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo3">
+                                        签名验证
+                                    </button>
+                                </div>
+                                <br>
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">验证结果</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="answer1" required lay-verify="required"
+                                                       placeholder="未验证"
+                                                       value="未验证"
+                                                       autocomplete="off"
+                                                       readonly
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="layui-tab-item">
+                <!--关联验证-->
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend class="tip-d">关联性验证</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            <div class="layui-row layui-col-space10">
+                                <form class="layui-form layui-form-pane" action="" lay-filter="rsaVerifyRe">
+
+                                    <div class="layui-form-item layui-row layui-col-space8">
+                                        <div class="layui-col-md12">
+                                            <label class="layui-form-label">输入签名</label>
+                                            <textarea name="vrsigma1" placeholder="输入签名" class="layui-textarea"
+                                                      lay-verify="required"></textarea>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <label class="layui-form-label">输入签名</label>
+                                            <textarea name="vrsigma2" placeholder="输入签名" class="layui-textarea"
+                                                      lay-verify="required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-row layui-col-space10">
+                                        <button class="layui-btn" style="margin: 5px;" lay-submit
+                                                lay-filter="formDemo4">
+                                            关联验证
+                                        </button>
+                                    </div>
+
+                                    <br>
+                                    <div class="layui-row">
+                                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">验证结果</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="answer2" required lay-verify="required"
+                                                           placeholder="未验证"
+                                                           autocomplete="off"
+                                                           value="未验证"
+                                                           readonly
+                                                           class="layui-input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </fieldset>
             </div>
         </div>
-    </fieldset>
+    </div>
+
 </div>
 
 <script src="../static/layui/layui.js" charset="utf-8"></script>

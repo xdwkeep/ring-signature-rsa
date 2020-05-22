@@ -28,10 +28,38 @@ def InvMod(a, b):
 def MulMod(a, b, c):
     return gmpy2.t_mod(a * b, c)
 
+def get_akr(n, k, ak, r):
+    with open('db/flagakr.json', 'r') as f:
+        flagakr = f.read()
+    if flagakr == 'True':  # 生成相关的关联标签
+        # 读取json
+        with open("db/akr/akr" + str(k) + ".json", 'r') as f:
+            load_dic = json.load(f)
+        if load_dic['ak'] != 0:
+            ak = load_dic['ak']
+            r = load_dic['r']
+        # 记录当前标签随机数
+        with open('db/akr/akr' + str(k) + '.json', 'w') as f:
+            new_dict = {'ak': int(ak), 'r': int(r)}
+            json.dump(new_dict, f)
+    else:  # 生成不相关的关联标签
+        for i in range(n):
+            # 初始化关联标签
+            new_dict = {'ak': 0, 'r': 0}
+            with open("db/akr/akr" + str(i) + ".json", "w") as f:
+                json.dump(new_dict, f)
+        # 记录当前标签随机数
+        with open('db/akr/akr' + str(k) + '.json', 'w') as f:
+            new_dict = {'ak': int(ak), 'r': int(r)}
+            json.dump(new_dict, f)
+
+    return ak, r
+
 
 # 生成签名，n_all代表总用户数，k代表当前用户编号（0~n-1)
 def sig_gen(n_all, k, userlist):
 
+    k_all = k
     # 读取Uk的私钥
     private_key = RSA.import_key(open('db/pem/private_key' + '_U' + str(k) + '.pem', "rb").read())
     d = private_key.d
@@ -59,31 +87,8 @@ def sig_gen(n_all, k, userlist):
     while gmpy2.gcd(r, phi_n) != 1:
         r = random.randrange(1, phi_n)
 
+    ak, r = get_akr(n_all, k_all, ak, r)
 
-    with open('db/flagakr.json', 'r') as f:
-        flagakr = f.read()
-
-    if flagakr == 'True':  # 生成相关的关联标签
-        # 读取json
-        with open("db/akr/akr" + str(k) + ".json", 'r') as f:
-            load_dic = json.load(f)
-        if load_dic['ak'] != 0:
-            ak = load_dic['ak']
-            r = load_dic['r']
-        # 记录当前标签随机数
-        with open('db/akr/akr' + str(k) + '.json', 'w') as f:
-            new_dict = {'ak': int(ak), 'r': int(r)}
-            json.dump(new_dict, f)
-    else:  # 生成不相关的关联标签
-        for i in range(n):
-            # 初始化关联标签
-            new_dict = {'ak': 0, 'r': 0}
-            with open("db/akr/akr" + str(i) + ".json", "w") as f:
-                json.dump(new_dict, f)
-        # 记录当前标签随机数
-        with open('db/akr/akr' + str(k) + '.json', 'w') as f:
-            new_dict = {'ak': int(ak), 'r': int(r)}
-            json.dump(new_dict, f)
     ak_1 = InvMod(ak, phi_n)
     e_ = MulMod(ak_1, r, phi_n)
 

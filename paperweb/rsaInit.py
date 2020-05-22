@@ -30,7 +30,6 @@ def rsa_init(n):
     print("初始化完成")
 
 
-
 if __name__ == "__main__":
     n = 5  # 假设n个用户
     rsa_init(n)

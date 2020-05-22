@@ -6,6 +6,14 @@ layui.use(['element', "layer", "jquery", "form"], function () {
     //var path = "http://127.0.0.1:5000";
     var path = "http://134.175.190.199:5000";
 
+    element.on('tab(docDemoTabBrief)', function (data) {
+        //console.log(this); //当前Tab标题所在的原始DOM元素
+        //console.log('test')
+        layer.msg('切到了' + this.innerText, {time: 1000});
+        //console.log(data.index); //得到当前Tab的所在下标
+        //console.log(data.elem); //得到当前的Tab大容器
+    });
+
     form.on('submit(rsainit)', function (data) {
         //layer.msg(JSON.stringify(data.field));
         var url = path + '/rsaInit.do';
@@ -178,5 +186,26 @@ layui.use(['element', "layer", "jquery", "form"], function () {
         return false;
     });
 
+
+    $(".tip-a").mouseenter(function () {
+        var that = this;
+        layer.tips('在输入成员数后，会为这些成员生成各自的公钥pk和私钥sk', that);
+    });
+    $(".tip-b").mouseenter(function () {
+        var that = this;
+        layer.tips('1. 输入当前签名者编号'+'</br>'+
+            '2. 关联标签的选择可让同一签名者生成的两个签名保持关联性'+'</br>'+
+            '3. 环成员选择代表了当前签名者在哪一个环中生成签名'+'</br>'+
+            '4. 输入的消息表示为这个消息生成环签名'
+            , that);
+    });
+    $(".tip-c").mouseenter(function () {
+        var that = this;
+        layer.tips('输入消息和生成的环签名点击环签名验证按钮，验证签名的合法性', that);
+    });
+    $(".tip-d").mouseenter(function () {
+        var that = this;
+        layer.tips('输入两个签名，点击关联性验证按钮判断两者是否具有关联性', that);
+    });
 });
 
