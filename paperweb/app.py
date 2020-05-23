@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import json
+
+from rsaConvertSig import sig_convert
 from rsaInit import rsa_init
 from rsaSigGen import sig_gen
 from rsaVerifySig import sig_verify
@@ -91,6 +93,20 @@ def rsaVerifyRelevance():
     with open('db/vr_sigma_u1.txt', 'w') as f:
         f.write(json_data['vrsigma2'])
     if relevace_verify():
+        return jsonify({"msg": 0, "data": "true"})
+    else:
+        return jsonify({"msg": 0, "data": "false"})
+
+
+@app.route('/rsaSigConvert.do', methods=['POST'])
+def rsaSigConvert():
+    data = request.get_data()
+    json_data = json.loads(data)
+    print(json_data)
+    k = json_data['cuser']
+    with open('db/sigma.txt', 'w') as f:
+        f.write(json_data['csigma'])
+    if sig_convert(k):
         return jsonify({"msg": 0, "data": "true"})
     else:
         return jsonify({"msg": 0, "data": "false"})

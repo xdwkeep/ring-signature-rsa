@@ -54,6 +54,9 @@ def sig_convert(k):
     if load_dic['ak'] != 0:
         ak = load_dic['ak']
         r = load_dic['r']
+    else:
+        print('False')
+        return False
 
     phi_n = (private_key.p - 1) * (private_key.q - 1)
     ak_1 = InvMod(ak, phi_n)
@@ -67,4 +70,4 @@ def sig_convert(k):
 
 
 if __name__ == "__main__":
-    sig_convert(1)
+    sig_convert(2)

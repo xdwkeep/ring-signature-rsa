@@ -51,8 +51,7 @@ layui.use(['element', "layer", "jquery", "form"], function () {
         });
         return false;
     });
-
-
+    
     form.on('submit(rsaSigGen)', function (data) {
         //layer.msg(JSON.stringify(data.field));
         var url = path + '/rsaSigGen.do';
@@ -187,15 +186,57 @@ layui.use(['element', "layer", "jquery", "form"], function () {
     });
 
 
+    form.on('submit(formDemo5)', function (data) {
+        var url = path + '/rsaSigConvert.do';
+        var indexload;
+        var cuser = data.field.cuser;
+        $.ajax({
+            url: url,
+            type: "post",
+            data: JSON.stringify({
+                'cuser': data.field.cuser,
+                'csigma': data.field.sigma5,
+            }),
+            dataType: "json",
+            beforeSend: function () {
+                indexload = layer.load(0, {shade: false, time: 10 * 1000}); //0代表加载的风格，支持0-2
+            },
+            success: function (data) {
+                //console.log("传过来的是：", data);
+                layer.close(indexload);
+                if (data.data == 'true') {
+                    layer.msg('验证成功，输入的环签名是由编号'+cuser+'的成员生成', {
+                        icon: 1,
+                        time: 2000
+                    });
+                } else {
+                    layer.msg('验证失败，输入的环签名不是由编号'+cuser+'的成员生成', {
+                        icon: 2,
+                        time: 2000
+                    });
+                }
+                //给表单赋值
+                form.val("rsaConvertSig", {
+                    "answer3": data.data,
+                });
+            },
+            error: function () {
+                console.log("ajax请求失败");
+            }
+        });
+        return false;
+    });
+
+
     $(".tip-a").mouseenter(function () {
         var that = this;
         layer.tips('在输入成员数后，会为这些成员生成各自的公钥pk和私钥sk', that);
     });
     $(".tip-b").mouseenter(function () {
         var that = this;
-        layer.tips('1. 输入当前签名者编号'+'</br>'+
-            '2. 关联标签的选择可让同一签名者生成的两个签名保持关联性'+'</br>'+
-            '3. 环成员选择代表了当前签名者在哪一个环中生成签名'+'</br>'+
+        layer.tips('1. 输入当前签名者编号' + '</br>' +
+            '2. 关联标签的选择可让同一签名者生成的两个签名保持关联性' + '</br>' +
+            '3. 环成员选择代表了当前签名者在哪一个环中生成签名' + '</br>' +
             '4. 输入的消息表示为这个消息生成环签名'
             , that);
     });
@@ -206,6 +247,11 @@ layui.use(['element', "layer", "jquery", "form"], function () {
     $(".tip-d").mouseenter(function () {
         var that = this;
         layer.tips('输入两个签名，点击关联性验证按钮判断两者是否具有关联性', that);
+    });
+
+    $(".tip-e").mouseenter(function () {
+        var that = this;
+        layer.tips('选择待判断的签名者，输入环签名，判断该环签名是否由其生成', that);
     });
 });
 

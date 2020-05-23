@@ -38,6 +38,7 @@
             <li>环签名生成</li>
             <li>环签名验证</li>
             <li>关联性验证</li>
+            <li>可转换验证</li>
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
@@ -257,7 +258,63 @@
                     </div>
                 </fieldset>
             </div>
-            
+            <div class="layui-tab-item">
+                <!--可转换验证-->
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend class="tip-">可转换验证</legend>
+                    <div class="layui-field-box">
+                        <div>
+                            <div class="layui-row layui-col-space10">
+                                <form class="layui-form layui-form-pane" action="" lay-filter="rsaConvertSig">
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">签名者</label>
+                                        <div class="layui-input-block">
+
+                                            {% for i in range(n) %}
+                                                <input type="radio" class="userchoose2" name="cuser"
+                                                       value="{{ i }}"
+                                                       title="编号{{ i }}">
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-row layui-col-space8">
+                                        <div class="layui-col-md12">
+                                            <label class="layui-form-label">输入签名</label>
+                                            <textarea name="sigma5" placeholder="输入签名" class="layui-textarea"
+                                                      lay-verify="required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-row layui-col-space10">
+                                        <button class="layui-btn" style="margin: 5px;" lay-submit lay-filter="formDemo5">
+                                            可转换验证
+                                        </button>
+                                    </div>
+
+                                    <br>
+                                    <div class="layui-row">
+                                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">验证结果</label>
+                                                <div class="layui-input-block">
+                                                    <input type="text" name="answer3" required lay-verify="required"
+                                                           placeholder="未验证"
+                                                           autocomplete="off"
+                                                           value="未验证"
+                                                           readonly
+                                                           class="layui-input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
         </div>
     </div>
 
