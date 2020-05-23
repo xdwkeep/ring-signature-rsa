@@ -3,8 +3,8 @@ layui.use(['element', "layer", "jquery", "form"], function () {
     var form = layui.form;
     var layer = layui.layer;
     var $ = layui.jquery;
-    //var path = "http://127.0.0.1:5000";
-    var path = "http://134.175.190.199:5000";
+    var path = "http://127.0.0.1:5000";
+    //var path = "http://134.175.190.199:5000";
 
     element.on('tab(docDemoTabBrief)', function (data) {
         //console.log(this); //当前Tab标题所在的原始DOM元素
