@@ -4,7 +4,7 @@ Flask==0.12.2
 Flask-Script==2.0.6
 gmpy2==2.1.0b1
 itsdangerous==0.24
-Jinja2==2.9.6
+Jinja2==2.10.1
 MarkupSafe==1.0
 pycryptodome==3.9.7
 Werkzeug==0.12.2
