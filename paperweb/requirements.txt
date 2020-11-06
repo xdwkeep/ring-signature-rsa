@@ -1,6 +1,6 @@
 certifi==2016.2.28
 click==6.7
-Flask==0.12.2
+Flask==1.0
 Flask-Script==2.0.6
 gmpy2==2.1.0b1
 itsdangerous==0.24
